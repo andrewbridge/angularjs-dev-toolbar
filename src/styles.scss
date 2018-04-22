@@ -1,0 +1,26 @@
+.dev-toolbar-wrapper {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: white;
+	width: 100vw;
+	display: flex;
+	flex-wrap: wrap;
+	border-top: 1px solid #dce5eb;
+	z-index: 1060;
+
+	.toolbar-module {
+	    display: flex;
+	    padding: 10px;
+
+	    &.full-width {
+		    width: 100vw;
+		}
+
+		:first-child {
+		    padding-right: 5px;
+		}
+	}
+	
+}
