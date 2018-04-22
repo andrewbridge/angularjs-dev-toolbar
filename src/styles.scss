@@ -9,26 +9,24 @@ $border-style: 1px solid #dce5eb;
 	border-top: $border-style;
 	z-index: 1060;
 
-	.mode {
-		//Modes
-		&.full {
-			.toolbar-module.full-width {
-			    width: 100vw;
-			}
+	//Modes
+	&.full {
+		.toolbar-module.full-width {
+		    width: 100vw;
 		}
-		&.full, &.compact {
-			width: 100vw;
-			left: 0;
-			right: 0;
-		}
-		&.mini {
-			left: 0;
-			border-right: $border-style;
-		}
-		&.compact, &.mini {
-			p {
-				margin-bottom: 0;
-			}
+	}
+	&.full, &.compact {
+		width: 100vw;
+		left: 0;
+		right: 0;
+	}
+	&.mini {
+		left: 0;
+		border-right: $border-style;
+	}
+	&.compact, &.mini {
+		p {
+			margin-bottom: 0;
 		}
 	}
 

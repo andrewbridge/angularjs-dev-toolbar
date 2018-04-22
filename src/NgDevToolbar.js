@@ -9,21 +9,18 @@ const defaultSettings = {
 class NgDevToolbar {
 	constructor(appendTo = document.body) {
 		this.modules = this.runModules();
-		const toolbarElm = document.createElement('DIV');
-		toolbarElm.classList.add('dev-toolbar-wrapper');
-		toolbarElm.innerHTML = `<div class="mode" :class="mode">`;
-		this.modules.forEach((module) => {
-			toolbarElm.innerHTML += `<${module.name}></${module.name}>`;
-		});
-		toolbarElm.innerHTML += `</div>`;
 		this.rootData = {
-			settings: JSON.parse(window.localStorage.getItem('NgDevToolbarSettings')) || defaultSettings,
-			modalCount: 0
+			settings: Object.assign(defaultSettings, JSON.parse(window.localStorage.getItem('NgDevToolbarSettings'))),
+			modalCount: 0,
+			modules: this.modules
 		};
 		this.hijackModalStack();
-		appendTo.appendChild(toolbarElm);
+		const toolbarElm = appendTo.appendChild(document.createElement('DIV'));
 		this.app = new Vue({
 			el: toolbarElm,
+			template: `<div class="dev-toolbar-wrapper" :class="mode">
+							<component v-for="component in modules" :is="component.name" :key="component.name"></component>
+						</div>`,
 			data: this.rootData,
 			computed: {
 				modalIsOpen() {
