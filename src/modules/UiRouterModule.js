@@ -30,8 +30,11 @@ class UiRouterToolbarModule {
 			template: `<div class="toolbar-module">
 				<i class="fa fa-map-signs" aria-hidden="true"></i>
 				<div>
-					<p>State: {{state.current.name}}</p>
-					<p>{{currentComponent}} ({{moduleMap.component[currentComponent]}})</p>
+					<template v-if="$root.mode === 'full' || $root.mode === 'compact'">
+						<p>State: {{state.current.name}}</p>
+						<p v-if="$root.mode === 'full'">{{currentComponent}} ({{moduleMap.component[currentComponent]}})</p>
+					</template>
+					<p v-if="$root.mode === 'mini'">{{state.current.name}}</p>
 				</div>
 			</div>`,
 			data: () => this.componentData,

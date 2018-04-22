@@ -1,20 +1,37 @@
+$border-style: 1px solid #dce5eb;
+
 .dev-toolbar-wrapper {
 	position: fixed;
 	bottom: 0;
-	left: 0;
-	right: 0;
 	background: white;
-	width: 100vw;
 	display: flex;
 	flex-wrap: wrap;
-	border-top: 1px solid #dce5eb;
+	border-top: $border-style;
 	z-index: 1060;
+
+	.mode {
+		//Modes
+		&.full, &.compact {
+			width: 100vw;
+			left: 0;
+			right: 0;
+		}
+		&.mini {
+			left: 0;
+			border-right: $border-style;
+		}
+		&.compact, &.mini {
+			p {
+				margin-bottom: 0;
+			}
+		}
+	}
 
 	.toolbar-module {
 	    display: flex;
 	    padding: 10px;
 
-	    &.full-width {
+	    .full &.full-width {
 		    width: 100vw;
 		}
 
