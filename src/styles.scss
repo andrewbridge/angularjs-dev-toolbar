@@ -11,6 +11,11 @@ $border-style: 1px solid #dce5eb;
 
 	.mode {
 		//Modes
+		&.full {
+			.toolbar-module.full-width {
+			    width: 100vw;
+			}
+		}
 		&.full, &.compact {
 			width: 100vw;
 			left: 0;
@@ -30,10 +35,6 @@ $border-style: 1px solid #dce5eb;
 	.toolbar-module {
 	    display: flex;
 	    padding: 10px;
-
-	    .full &.full-width {
-		    width: 100vw;
-		}
 
 		:first-child {
 		    padding-right: 5px;
