@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "lodash": "^4.17.10",
     "vue": "^2.5.16"
   },
   "devDependencies": {

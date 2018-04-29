@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import settings from './settings.js';
 
 const appName = settings.appModuleName;
@@ -98,6 +99,13 @@ class Util {
 				}).result.then(resolve, reject);
 			}
 		});
+	}
+
+	static getScope(selector) {
+		if (selector instanceof HTMLElement) {
+			return angular.element(selector).scope();
+		}
+		return angular.element(_.kebabCase(selector)).scope();
 	}
 }
 
