@@ -102,10 +102,21 @@ class Util {
 	}
 
 	static getScope(selector) {
+		let elm;
 		if (selector instanceof HTMLElement) {
-			return angular.element(selector).scope();
+			elm = selector;
+		} else if (_.isArrayLike(selector) && _.isFunction(selector.get)) {
+			// Probably jQuery
+			elm = selector.get(0);
+		} else if (document.querySelector(selector)) {
+			elm = document.querySelector(selector);
+		} else {
+			elm = document.querySelector(_.kebabCase(selector));
 		}
-		return angular.element(_.kebabCase(selector)).scope();
+		if (elm instanceof HTMLElement && elm.childNodes.length) {
+			return angular.element(elm.childNodes[0]).scope();
+		}
+		return null
 	}
 }
 
