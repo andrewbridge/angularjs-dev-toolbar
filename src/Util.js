@@ -118,6 +118,20 @@ class Util {
 		}
 		return null
 	}
+
+	static toJSON(data, space = 2) {
+		const seen = [];
+		return JSON.stringify(data, (key, value) => {
+			if (typeof value === 'object' && value !== null) {
+				if (seen.indexOf(value) > -1) {
+					return `[Already seen ${key}]`;
+				} else {
+					seen.push(value);
+				}
+			}
+			return value;
+		}, space)
+	}
 }
 
 export default Util;
