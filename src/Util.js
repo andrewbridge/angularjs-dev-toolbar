@@ -20,9 +20,12 @@ class Util {
 		return false; 
 	}
 
-	static $inject(module) {
+	static $inject(module, expose = false) {
 		if (!Util.isPlatform()) {
 			return null;
+		}
+		if (expose === true && !_.isObject(window)) {
+			expose = false;
 		}
 		if (!('$inject' in injectionCache)) {
 			const $body = angular.element(document.body);
@@ -32,10 +35,15 @@ class Util {
 				return null;
 			}
 		}
+		let injection;
 		if (module in injectionCache) {
-			return injectionCache[module];
+			injection = injectionCache[module];
+			expose && _.set(window, module, injection);
+			return injection;
 		}
-		return injectionCache[module] = injectionCache['$inject'](module);
+		injection = injectionCache[module] = injectionCache['$inject'](module);
+		expose && _.set(window, module, injection);
+		return injection;
 	}
 
 	static loadAsset(type, url, appendTo) {
@@ -130,7 +138,42 @@ class Util {
 				}
 			}
 			return value;
-		}, space)
+		}, space);
+	}
+
+	static stalk(root, path) {
+		var oldFunc = root[path];
+		root[path] = function() {
+			try { throw new Error(); }
+			catch (e) { console.log({type: path, stack: e.stack}); }
+			return oldFunc(...arguments);
+		};
+	}
+
+	static get $state() {
+		return Util.$inject('$state');
+	}
+
+	static get $rootScope() {
+		return Util.$inject('$rootScope');
+	}
+
+	static get pageScope() {
+		return Util.getScope('[ui-view] > :first-child');
+	}
+
+	// This could potentially be a bit heavy
+	static get scopes() {
+		return Array.from(document.querySelectorAll('.ng-scope, .ng-isolate-scope')).reduce((scopes, elm) => {
+			const scope = Util.getScope(elm);
+			let name = _.camelCase(elm.tagName);
+			// Account for multiple components
+			if (name in scopes) {
+				name += `-${scope.$id}`;
+			}
+			scopes[name] = scope;
+			return scopes;
+		}, {});
 	}
 }
 
