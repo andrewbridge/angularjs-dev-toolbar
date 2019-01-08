@@ -29,6 +29,9 @@ $border-style: 1px solid #dce5eb;
 			margin-bottom: 0;
 		}
 	}
+	&.hidden {
+		display: none;
+	}
 
 	.toolbar-module {
 	    display: flex;
